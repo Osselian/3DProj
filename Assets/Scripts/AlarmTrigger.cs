@@ -12,7 +12,6 @@ public class AlarmTrigger : MonoBehaviour
     private AudioSource _audioSource;
     private AlarmVolumeAmplifier _alarmVolumeAmplifier;
 
-
     public event UnityAction Reached
     {
         add => _reached.AddListener(value);
