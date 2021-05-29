@@ -27,6 +27,7 @@ public class GhostTrigger : MonoBehaviour
     {
         _movement.FinalPointReached += OnPointReached;
     }
+
     public void OnDisable()
     {
         _movement.FinalPointReached -= OnPointReached;

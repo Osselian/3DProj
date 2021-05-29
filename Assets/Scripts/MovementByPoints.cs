@@ -10,7 +10,9 @@ public class MovementByPoints : MonoBehaviour
     [SerializeField] private Transform _pathOut;
     [SerializeField] private float _duration;
     [SerializeField] private float _speed;
-
+        
+    private Vector3[] _points;
+    private bool _endPointIsReached;
     private UnityEvent _finalPointReached = new UnityEvent();
 
     public event UnityAction FinalPointReached
@@ -18,18 +20,15 @@ public class MovementByPoints : MonoBehaviour
         add => _finalPointReached.AddListener(value);
         remove => _finalPointReached.RemoveListener(value);
     }
-
-    private Vector3[] _points;
-    private bool _endPointIsReached;
-
+    
     public float Speed { get; private set; }
 
-    public void OnEnable()
+    private void OnEnable()
     {
         GetComponentInChildren<Animator>().GetBehaviour<ScaredEnabled>().RunAway += OnRunAway;
     }
 
-    public void OnDisable()
+    private void OnDisable()
     {
         GetComponentInChildren<Animator>().GetBehaviour<ScaredEnabled>().RunAway -= OnRunAway;
     }
@@ -48,6 +47,7 @@ public class MovementByPoints : MonoBehaviour
             _endPointIsReached = true;
         }
     }
+
     private void Move()
     {
         Tween tween = transform.DOPath(_points, _duration / Speed, PathType.Linear).SetLookAt(0.05f);

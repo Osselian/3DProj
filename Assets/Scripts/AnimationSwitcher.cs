@@ -14,6 +14,7 @@ public class AnimationSwitcher : MonoBehaviour
     {
         _externalModifier.GetComponent<GhostTrigger>().ScarySoundPlayed += OnScared;
     }
+
     public void OnDisable()
     {
         _externalModifier.GetComponent<GhostTrigger>().ScarySoundPlayed -= OnScared;
