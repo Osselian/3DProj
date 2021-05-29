@@ -9,11 +9,17 @@ public class AlarmVolumeAmplifier : MonoBehaviour
     [SerializeField] private float _volumeIncreaseStrenght ;
 
     private AlarmTrigger _alarmTrigger;
+    private Coroutine _amplify;
+    private Coroutine _reduce;
 
-    private void OnEnable()
+    private void Awake()
     {
         _alarmTrigger = GetComponent<AlarmTrigger>();
         _audioSource.volume = 0.1f;
+    }
+
+    private void OnEnable()
+    {
         _alarmTrigger.Reached += OnReached;
     }
 
@@ -24,7 +30,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
     
     private void OnReached()
     {
-        StartCoroutine(AmplifyVolume());
+        _amplify = StartCoroutine(AmplifyVolume());
     }
 
     private IEnumerator AmplifyVolume()
@@ -34,6 +40,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
             _audioSource.volume += _volumeIncreaseStrenght;
             yield return null;
         }
+        _reduce = StartCoroutine(ReduceVolume());
     }
 
     private IEnumerator ReduceVolume()
@@ -43,19 +50,15 @@ public class AlarmVolumeAmplifier : MonoBehaviour
             _audioSource.volume -= _volumeIncreaseStrenght;
             yield return null;
         }
-
+        _amplify = StartCoroutine(AmplifyVolume());
     }
-    private void Update()
+
+    public void StopAmplifier()
     {
-        if (_audioSource.volume >= 0.9)
-        {
-            StopCoroutine(AmplifyVolume());
-            StartCoroutine(ReduceVolume());
-        }
-        if (_audioSource.volume <= 0.1)
-        {
-            StopCoroutine(ReduceVolume());
-            StartCoroutine(AmplifyVolume());
-        }
+        if (_amplify != null)        
+            StopCoroutine(_amplify);
+
+        if (_reduce != null)
+            StopCoroutine(_reduce);
     }
 }

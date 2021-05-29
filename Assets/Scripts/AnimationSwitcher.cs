@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MovementAnimationStarter : MonoBehaviour
+public class AnimationSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObject _externalModifier;
 

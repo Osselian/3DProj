@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AlarmVolumeAmplifier))]
 public class AlarmTrigger : MonoBehaviour
 {
     [SerializeField] private UnityEvent _reached = new UnityEvent();
 
     private AudioSource _audioSource;
+    private AlarmVolumeAmplifier _alarmVolumeAmplifier;
+
 
     public event UnityAction Reached
     {
@@ -15,10 +19,12 @@ public class AlarmTrigger : MonoBehaviour
         remove => _reached.RemoveListener(value);
     }
 
-    private void OnEnable()
+    private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _alarmVolumeAmplifier = GetComponent<AlarmVolumeAmplifier>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<MovementByPoints>(out MovementByPoints movementComponent))
@@ -32,8 +38,8 @@ public class AlarmTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<MovementByPoints>(out MovementByPoints movementComponent)) 
         {
-            GetComponent<AudioSource>().Stop();
-            GetComponent<AlarmVolumeAmplifier>().StopAllCoroutines();
+            _audioSource.Stop();
+            _alarmVolumeAmplifier.StopAmplifier();
         }
     }
 }
