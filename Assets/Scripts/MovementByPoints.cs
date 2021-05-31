@@ -15,13 +15,13 @@ public class MovementByPoints : MonoBehaviour
     private bool _endPointIsReached;
     private UnityEvent _finalPointReached = new UnityEvent();
 
+    public float Speed { get; private set; }
+
     public event UnityAction FinalPointReached
     {
         add => _finalPointReached.AddListener(value);
         remove => _finalPointReached.RemoveListener(value);
-    }
-    
-    public float Speed { get; private set; }
+    }    
 
     private void OnEnable()
     {

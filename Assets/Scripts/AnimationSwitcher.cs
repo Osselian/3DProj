@@ -9,15 +9,21 @@ public class AnimationSwitcher : MonoBehaviour
 
     private Animator _animator;
     private float _speed;
+    private GhostTrigger _ghostTrigger;
+
+    public void Awake()
+    {
+        _ghostTrigger = _externalModifier.GetComponent<GhostTrigger>();
+    }
 
     public void OnEnable()
     {
-        _externalModifier.GetComponent<GhostTrigger>().ScarySoundPlayed += OnScared;
+        _ghostTrigger.ScarySoundPlayed += OnScared;
     }
 
     public void OnDisable()
     {
-        _externalModifier.GetComponent<GhostTrigger>().ScarySoundPlayed -= OnScared;
+        _ghostTrigger.ScarySoundPlayed -= OnScared;
     }
 
     private void Start()
