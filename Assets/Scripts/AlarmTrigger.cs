@@ -7,10 +7,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(AlarmVolumeAmplifier))]
 public class AlarmTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent _reached = new UnityEvent();
-
     private AudioSource _audioSource;
     private AlarmVolumeAmplifier _alarmVolumeAmplifier;
+
+    [SerializeField] private UnityEvent _reached = new UnityEvent();
 
     public event UnityAction Reached
     {

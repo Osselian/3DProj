@@ -9,8 +9,9 @@ public class GhostTrigger : MonoBehaviour
     [SerializeField] private Ghost[] _ghosts;
     [SerializeField] private MovementByPoints _movement;
 
-    private UnityEvent _scarySoundPlayed = new UnityEvent();
     private AudioSource _audioSource;
+
+    private UnityEvent _scarySoundPlayed = new UnityEvent();    
 
     public event UnityAction ScarySoundPlayed
     {

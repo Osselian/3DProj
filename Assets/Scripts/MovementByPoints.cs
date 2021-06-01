@@ -13,24 +13,31 @@ public class MovementByPoints : MonoBehaviour
         
     private Vector3[] _points;
     private bool _endPointIsReached;
-    private UnityEvent _finalPointReached = new UnityEvent();
+    private ScaredEnabled _scaredEnabled;
 
     public float Speed { get; private set; }
+    
+    private UnityEvent _finalPointReached = new UnityEvent();
 
     public event UnityAction FinalPointReached
     {
         add => _finalPointReached.AddListener(value);
         remove => _finalPointReached.RemoveListener(value);
-    }    
+    }
+
+    private void Awake()
+    {
+        _scaredEnabled = GetComponentInChildren<Animator>().GetBehaviour<ScaredEnabled>();
+    }
 
     private void OnEnable()
     {
-        GetComponentInChildren<Animator>().GetBehaviour<ScaredEnabled>().RunAway += OnRunAway;
+        _scaredEnabled.RunAway += OnRunAway;
     }
 
     private void OnDisable()
     {
-        GetComponentInChildren<Animator>().GetBehaviour<ScaredEnabled>().RunAway -= OnRunAway;
+        _scaredEnabled.RunAway -= OnRunAway;
     }
 
     private void Start()
@@ -43,7 +50,7 @@ public class MovementByPoints : MonoBehaviour
     {
         if (transform.position == _points[_points.Length - 1] && _endPointIsReached == false)
         {
-            End();
+            StopMovement();
             _endPointIsReached = true;
         }
     }
@@ -71,7 +78,7 @@ public class MovementByPoints : MonoBehaviour
         Move();
     }
 
-    private void End()
+    private void StopMovement()
     {
         Speed = 0;
         _finalPointReached?.Invoke();
