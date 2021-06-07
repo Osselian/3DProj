@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(AlarmTrigger))]
 public class AlarmVolumeAmplifier : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _volumeIncreaseStrenght ;
+    [SerializeField] private float minVolume;
+    [SerializeField] private float maxVolume;
 
     private AlarmTrigger _alarmTrigger;
     private Coroutine _amplify;
@@ -35,7 +38,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private IEnumerator AmplifyVolume()
     {
-        while (_audioSource.volume < 1)
+        while (_audioSource.volume < maxVolume)
         {
             _audioSource.volume += _volumeIncreaseStrenght;
             yield return null;
@@ -45,7 +48,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private IEnumerator ReduceVolume()
     {
-        while (_audioSource.volume > 0.01f)
+        while (_audioSource.volume > minVolume)
         {
             _audioSource.volume -= _volumeIncreaseStrenght;
             yield return null;

@@ -5,25 +5,27 @@ using UnityEngine.Events;
 
 public class AnimationSwitcher : MonoBehaviour
 {
-    [SerializeField] private GameObject _externalModifier;
+    //[SerializeField] private GameObject _externalModifier;
+    [SerializeField] private GhostTrigger _ghostTrigger;
 
     private Animator _animator;
     private float _speed;
-    private GhostTrigger _ghostTrigger;
+    //private GhostTrigger _ghostTrigger;
 
-    public void Awake()
-    {
-        _ghostTrigger = _externalModifier.GetComponent<GhostTrigger>();
-    }
+    //public void Awake()
+    //{
+    //    //_ghostTrigger = _externalModifier.GetComponent<GhostTrigger>();
+        
+    //}
 
     public void OnEnable()
     {
-        _ghostTrigger.ScarySoundPlayed += OnScared;
+        _ghostTrigger.ScarySoundPlayed += OnScarySoundPlayed;
     }
 
     public void OnDisable()
     {
-        _ghostTrigger.ScarySoundPlayed -= OnScared;
+        _ghostTrigger.ScarySoundPlayed -= OnScarySoundPlayed;
     }
 
     private void Start()
@@ -36,7 +38,7 @@ public class AnimationSwitcher : MonoBehaviour
     {
         _animator.SetFloat("Speed", _speed);
     }
-    private void OnScared()
+    private void OnScarySoundPlayed()
     {
         _animator.SetTrigger("Scared");
         _speed = 2f;

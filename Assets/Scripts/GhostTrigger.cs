@@ -38,9 +38,9 @@ public class GhostTrigger : MonoBehaviour
     {
         for (int i = 0; i < _ghosts.Length; i++)
         {
-            _ghosts[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
-            _audioSource.Play();
-            _scarySoundPlayed?.Invoke();
+            _ghosts[i].GetComponent<MeshRenderer>().enabled = true;
         }
+        _audioSource.Play();
+        _scarySoundPlayed?.Invoke();
     }
 }
