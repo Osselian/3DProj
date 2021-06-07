@@ -13,7 +13,6 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private AlarmTrigger _alarmTrigger;
     private Coroutine _amplify;
-    private Coroutine _reduce;
 
     private void Awake()
     {
@@ -33,35 +32,30 @@ public class AlarmVolumeAmplifier : MonoBehaviour
     
     private void OnReached()
     {
-        _amplify = StartCoroutine(AmplifyVolume());
+        _amplify = StartCoroutine(ChangeVolume(maxVolume));
     }
 
-    private IEnumerator AmplifyVolume()
-    {
-        while (_audioSource.volume < maxVolume)
-        {
-            _audioSource.volume += _volumeIncreaseStrenght;
-            yield return null;
+    private IEnumerator ChangeVolume(float targetVolume)
+    {        
+        while (_audioSource.volume != targetVolume)
+        {            
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _volumeIncreaseStrenght);
+            yield return null;        
         }
-        _reduce = StartCoroutine(ReduceVolume());
-    }
-
-    private IEnumerator ReduceVolume()
-    {
-        while (_audioSource.volume > minVolume)
+        if (targetVolume == 1)
         {
-            _audioSource.volume -= _volumeIncreaseStrenght;
-            yield return null;
+            targetVolume = 0;
         }
-        _amplify = StartCoroutine(AmplifyVolume());
+        else
+        {
+            targetVolume = 1;
+        }
+        StartCoroutine(ChangeVolume(targetVolume));
     }
 
     public void StopAmplifier()
     {
         if (_amplify != null)        
             StopCoroutine(_amplify);
-
-        if (_reduce != null)
-            StopCoroutine(_reduce);
     }
 }

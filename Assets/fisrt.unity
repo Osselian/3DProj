@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777104e60a93d7446a822f97ae9f4541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _externalModifier: {fileID: 1156551557}
+  _ghostTrigger: {fileID: 1156551559}
 --- !u!1 &795394984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1740,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1141115194}
   _volumeIncreaseStrenght: 0.01
+  minVolume: 0
+  maxVolume: 1
 --- !u!1 &1156551557
 GameObject:
   m_ObjectHideFlags: 0
