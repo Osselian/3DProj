@@ -5,18 +5,10 @@ using UnityEngine.Events;
 
 public class AnimationSwitcher : MonoBehaviour
 {
-    //[SerializeField] private GameObject _externalModifier;
     [SerializeField] private GhostTrigger _ghostTrigger;
 
     private Animator _animator;
     private float _speed;
-    //private GhostTrigger _ghostTrigger;
-
-    //public void Awake()
-    //{
-    //    //_ghostTrigger = _externalModifier.GetComponent<GhostTrigger>();
-        
-    //}
 
     public void OnEnable()
     {

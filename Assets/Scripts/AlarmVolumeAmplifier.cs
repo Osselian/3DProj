@@ -13,6 +13,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private AlarmTrigger _alarmTrigger;
     private Coroutine _amplify;
+    private bool _isPlayed;
 
     private void Awake()
     {
@@ -36,26 +37,33 @@ public class AlarmVolumeAmplifier : MonoBehaviour
     }
 
     private IEnumerator ChangeVolume(float targetVolume)
-    {        
-        while (_audioSource.volume != targetVolume)
-        {            
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _volumeIncreaseStrenght);
-            yield return null;        
-        }
-        if (targetVolume == 1)
+    {
+        _isPlayed = true;
+
+        while (_isPlayed)
         {
-            targetVolume = 0;
+            while (_audioSource.volume != targetVolume)
+            {            
+                _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _volumeIncreaseStrenght);
+                yield return null;        
+            }
+            if (targetVolume == 1)
+            {
+                targetVolume = 0;
+            }
+            else
+            {
+                targetVolume = 1;
+            }
         }
-        else
-        {
-            targetVolume = 1;
-        }
-        StartCoroutine(ChangeVolume(targetVolume));
     }
 
     public void StopAmplifier()
     {
-        if (_amplify != null)        
+        if (_amplify != null)
+        {
             StopCoroutine(_amplify);
+            _isPlayed = false;
+        }        
     }
 }
