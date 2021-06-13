@@ -13,7 +13,7 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private AlarmTrigger _alarmTrigger;
     private Coroutine _amplify;
-    private bool _isPlayed;
+    private bool _isPlayed = true;
 
     private void Awake()
     {
@@ -38,8 +38,6 @@ public class AlarmVolumeAmplifier : MonoBehaviour
 
     private IEnumerator ChangeVolume(float targetVolume)
     {
-        _isPlayed = true;
-
         while (_isPlayed)
         {
             while (_audioSource.volume != targetVolume)
@@ -63,7 +61,6 @@ public class AlarmVolumeAmplifier : MonoBehaviour
         if (_amplify != null)
         {
             StopCoroutine(_amplify);
-            _isPlayed = false;
         }        
     }
 }
